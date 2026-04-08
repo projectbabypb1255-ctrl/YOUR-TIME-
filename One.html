@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crypto Investment Store</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+overflow-x:hidden;
+}
+
+/* Animated Bitcoin Background */
+
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.coin{
+position:absolute;
+width:60px;
+opacity:0.15;
+animation:float 20s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh) rotate(0deg)}
+100%{transform:translateY(-200px) rotate(360deg)}
+}
+
+/* Login Page */
+
+#loginPage{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.loginBtn{
+padding:12px 25px;
+background:#4285F4;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
+border-radius:5px;
+}
+
+/* Topbar */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:black;
+padding:15px;
+}
+
+.leftLogin{
+background:orange;
+border:none;
+padding:8px 15px;
+cursor:pointer;
+}
+
+/* Menu */
+
+.menu{
+position:relative;
+}
+
+.menuBtn{
+font-size:25px;
+cursor:pointer;
+}
+
+.dropdown{
+display:none;
+position:absolute;
+right:0;
+background:white;
+color:black;
+min-width:150px;
+}
+
+.dropdown a{
+display:block;
+padding:10px;
+text-decoration:none;
+color:black;
+}
+
+.dropdown a:hover{
+background:#eee;
+}
+
+/* Dashboard */
+
+#dashboard{
+background:#222;
+margin:20px;
+padding:20px;
+border-radius:10px;
+}
+
+/* Referral */
+
+.referral{
+background:#333;
+margin:20px;
+padding:15px;
+border-radius:10px;
+}
+
+/* Products */
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.product{
+background:#222;
+padding:20px;
+border-radius:10px;
+text-align:center;
+}
+
+.buy{
+background:#0f9d58;
+border:none;
+padding:10px;
+color:white;
+cursor:pointer;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg" id="bg"></div>
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+<h2>Login to Continue</h2>
+
+<button class="loginBtn" onclick="login()">
+Login with Gmail
+</button>
+
+</div>
+
+
+<!-- MAIN WEBSITE -->
+
+<div id="site" style="display:none">
+
+<div class="topbar">
+
+<button class="leftLogin">Login</button>
+
+<h3>Crypto Product Market</h3>
+
+<div class="menu">
+
+<span class="menuBtn" onclick="menu()">⋮</span>
+
+<div class="dropdown" id="dropdown">
+
+<a href="#">About</a>
+<a href="#">Switch Account</a>
+<a href="#" onclick="logout()">Logout</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+<h2>Your Dashboard</h2>
+
+<p>Total Invested: <span id="invested">0</span> GHS</p>
+
+<p>Total Earnings: <span id="earnings">0</span> GHS</p>
+
+<p>Referral Bonus: <span id="refbonus">0</span> GHS</p>
+
+</div>
+
+
+<!-- REFERRAL -->
+
+<div class="referral">
+
+<h3>Your Referral Link</h3>
+
+<input type="text" value="https://yourcryptosite.com/?ref=USER123" style="width:100%">
+
+<p>Earn 10 GHS for every referral.</p>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div class="products" id="products"></div>
+
+</div>
+
+
+<script>
+
+/* Login */
+
+function login(){
+document.getElementById("loginPage").style.display="none"
+document.getElementById("site").style.display="block"
+}
+
+/* Logout */
+
+function logout(){
+location.reload()
+}
+
+/* Menu */
+
+function menu(){
+let d=document.getElementById("dropdown")
+d.style.display=d.style.display==="block"?"none":"block"
+}
+
+/* Products Data */
+
+let products=[
+
+{p:"Product 1",price:20,income:"120 / 3 Months"},
+{p:"Product 2",price:50,income:"150 / 55 Days"},
+{p:"Product 3",price:80,income:"200 / 50 Days"},
+{p:"Product 4",price:120,income:"300 / 45 Days"},
+{p:"Product 5",price:200,income:"450 / 40 Days"},
+{p:"Product 6",price:350,income:"700 / 35 Days"},
+{p:"Product 7",price:500,income:"1000 / 30 Days"},
+{p:"Product 8",price:700,income:"1400 / 25 Days"},
+{p:"Product 9",price:1000,income:"2000 / 20 Days"},
+{p:"Product 10",price:1500,income:"3000 / 15 Days"}
+
+]
+
+let invested=0
+
+products.forEach(x=>{
+
+let card=document.createElement("div")
+
+card.className="product"
+
+card.innerHTML=`
+
+<h3>${x.p}</h3>
+
+<p>Price: ${x.price} GHS</p>
+
+<p>Income: ${x.income}</p>
+
+<button class="buy" onclick="buy(${x.price})">Buy with MoMo</button>
+
+`
+
+document.getElementById("products").appendChild(card)
+
+})
+
+/* Buy Function */
+
+function buy(price){
+
+alert("Send "+price+" GHS to MoMo number 055XXXXXXX")
+
+invested+=price
+
+document.getElementById("invested").innerText=invested
+
+}
+
+/* Bitcoin animation */
+
+for(let i=0;i<25;i++){
+
+let img=document.createElement("img")
+
+img.src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg"
+
+img.className="coin"
+
+img.style.left=Math.random()*100+"%"
+
+img.style.animationDuration=(10+Math.random()*20)+"s"
+
+document.getElementById("bg").appendChild(img)
+
+}
+
+</script>
+
+</body>
+</html>
